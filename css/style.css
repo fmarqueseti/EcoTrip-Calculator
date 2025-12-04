@@ -1,0 +1,762 @@
+/**
+ * STYLE.CSS - Estilos da Calculadora de Emissão de CO₂
+ * Estrutura: Reset → Layout Base → Componentes → Responsivo
+ */
+
+/* ================================================================
+   RESET E VARIÁVEIS CSS
+   ================================================================ */
+
+:root {
+    /* Cores primárias */
+    --color-primary: #2ecc71;
+    --color-secondary: #27ae60;
+    --color-info: #3498db;
+    --color-warning: #e74c3c;
+    --color-success: #00aa00;
+    
+    /* Cores neutras */
+    --color-dark: #2c3e50;
+    --color-gray: #7f8c8d;
+    --color-gray-light: #ecf0f1;
+    --color-white: #ffffff;
+    
+    /* Espaçamento */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    
+    /* Tipografia */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-size-base: 1rem;
+    --font-size-small: 0.875rem;
+    --font-size-tiny: 0.75rem;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+    
+    /* Efeitos */
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --radius: 0.5rem;
+    --radius-lg: 1rem;
+    --radius-full: 9999px;
+    --transition: 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    color: var(--color-dark);
+    background-color: #f8f9fa;
+    line-height: 1.6;
+}
+
+/* ================================================================
+   LAYOUT BASE
+   ================================================================ */
+
+.header {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    color: var(--color-white);
+    padding: var(--spacing-xl) var(--spacing-md);
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.header__container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header__title {
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-md);
+    letter-spacing: -0.5px;
+}
+
+.header__subtitle {
+    font-size: 1.125rem;
+    opacity: 0.95;
+    line-height: 1.5;
+}
+
+.main {
+    max-width: 1200px;
+    margin: var(--spacing-xl) auto;
+    padding: 0 var(--spacing-md);
+}
+
+.footer {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    padding: var(--spacing-lg) var(--spacing-md);
+    text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+.footer__text {
+    opacity: 0.9;
+}
+
+/* ================================================================
+   FORMULÁRIO
+   ================================================================ */
+
+.calculator {
+    background: var(--color-white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    margin-bottom: var(--spacing-lg);
+}
+
+.calculator__fieldset {
+    border: none;
+    margin-bottom: var(--spacing-lg);
+}
+
+.calculator__legend {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-dark);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 2px solid var(--color-gray-light);
+}
+
+.calculator__field {
+    margin-bottom: var(--spacing-lg);
+}
+
+.calculator__field--checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+}
+
+.calculator__label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-dark);
+}
+
+.calculator__input {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 2px solid var(--color-gray-light);
+    border-radius: var(--radius);
+    font-size: var(--font-size-base);
+    transition: border-color var(--transition);
+}
+
+.calculator__input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+}
+
+.calculator__input:read-only {
+    background-color: #fafafa;
+    color: var(--color-gray);
+}
+
+.calculator__helper-text {
+    font-size: var(--font-size-small);
+    color: var(--color-gray);
+    margin-top: var(--spacing-xs);
+}
+
+.calculator__checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--color-primary);
+}
+
+.calculator__checkbox-label {
+    cursor: pointer;
+    user-select: none;
+}
+
+.calculator__fieldset--transport {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-lg);
+    border-top: 2px solid var(--color-gray-light);
+}
+
+.calculator__transport-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.calculator__transport-option {
+    position: relative;
+    cursor: pointer;
+}
+
+.calculator__radio {
+    display: none;
+}
+
+.calculator__transport-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    border: 2px solid var(--color-gray-light);
+    border-radius: var(--radius);
+    background-color: var(--color-white);
+    transition: all var(--transition);
+    cursor: pointer;
+    min-height: 120px;
+}
+
+.calculator__radio:checked + .calculator__transport-label {
+    border-color: var(--color-primary);
+    background-color: rgba(46, 204, 113, 0.1);
+    box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+}
+
+.calculator__transport-label span:first-child {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.calculator__transport-label span:last-child {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-small);
+}
+
+.calculator__button {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+}
+
+.calculator__button:hover:not(:disabled) {
+    background-color: var(--color-secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.calculator__button:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+/* ================================================================
+   SPINNER DE CARREGAMENTO
+   ================================================================ */
+
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--color-white);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ================================================================
+   CLASSE HIDDEN
+   ================================================================ */
+
+.hidden {
+    display: none !important;
+}
+
+/* ================================================================
+   ANIMAÇÕES
+   ================================================================ */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* ================================================================
+   SEÇÃO DE RESULTADOS
+   ================================================================ */
+
+.results,
+.comparison,
+.carbon-credits {
+    background: var(--color-white);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.results__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.results__card {
+    background: var(--color-white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: var(--spacing-md);
+    transition: all var(--transition);
+}
+
+.results__card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.results__card--highlight {
+    border: 3px solid var(--color-primary);
+    background: linear-gradient(135deg, rgba(46, 204, 113, 0.05) 0%, rgba(46, 204, 113, 0.02) 100%);
+}
+
+.results__card--success {
+    border-left: 4px solid var(--color-success);
+    background-color: #f0fdf4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.results__card-title {
+    font-size: var(--font-size-small);
+    color: var(--color-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-sm);
+    font-weight: var(--font-weight-bold);
+}
+
+.results__card-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.results__card-content--transport {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.results__value {
+    font-size: 1.75rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-dark);
+}
+
+.results__route {
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-dark);
+}
+
+.results__icon {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.results__transport-icon {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.results__transport-label {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-dark);
+}
+
+.results__savings-percentage {
+    font-size: var(--font-size-small);
+    color: var(--color-success);
+    font-weight: var(--font-weight-bold);
+    margin-top: var(--spacing-xs);
+}
+
+/* ================================================================
+   SEÇÃO DE COMPARAÇÃO
+   ================================================================ */
+
+.comparison__container {
+    padding: var(--spacing-md) 0;
+}
+
+.comparison__item {
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border: 2px solid var(--color-gray-light);
+    border-radius: var(--radius);
+    transition: all var(--transition);
+}
+
+.comparison__item:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow);
+}
+
+.comparison__item--selected {
+    border-color: var(--color-primary);
+    background-color: rgba(46, 204, 113, 0.08);
+    box-shadow: var(--shadow-lg);
+}
+
+.comparison__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.comparison__header-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.comparison__icon {
+    font-size: 1.5rem;
+}
+
+.comparison__label {
+    font-weight: var(--font-weight-bold);
+    font-size: 1.125rem;
+    color: var(--color-dark);
+}
+
+.comparison__badge {
+    display: inline-block;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-tiny);
+    font-weight: var(--font-weight-bold);
+    height: auto;
+    white-space: nowrap;
+}
+
+.comparison__stats {
+    text-align: right;
+    margin-bottom: var(--spacing-md);
+}
+
+.comparison__emission {
+    font-weight: var(--font-weight-bold);
+    font-size: 1.125rem;
+    color: var(--color-dark);
+}
+
+.comparison__percentage {
+    font-size: var(--font-size-small);
+    color: var(--color-gray);
+}
+
+.comparison__bar-container {
+    width: 100%;
+    height: 12px;
+    background-color: var(--color-gray-light);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.comparison__bar {
+    height: 100%;
+    border-radius: var(--radius);
+    transition: width 0.5s ease;
+}
+
+.comparison__tip {
+    background-color: rgba(52, 152, 219, 0.1);
+    border-left: 4px solid var(--color-info);
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    border-radius: var(--radius);
+}
+
+.comparison__tip-text {
+    font-size: var(--font-size-small);
+    color: var(--color-dark);
+    line-height: 1.5;
+}
+
+/* ================================================================
+   SEÇÃO DE CRÉDITOS DE CARBONO
+   ================================================================ */
+
+.carbon-credits__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.carbon-credits__card {
+    background: var(--color-white);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: all var(--transition);
+}
+
+.carbon-credits__card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.carbon-credits__card-title {
+    font-size: var(--font-size-small);
+    color: var(--color-gray);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-md);
+    font-weight: var(--font-weight-bold);
+}
+
+.carbon-credits__card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carbon-credits__value {
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    line-height: 1;
+    margin-bottom: var(--spacing-sm);
+}
+
+.carbon-credits__price {
+    font-size: 2.5rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    line-height: 1;
+}
+
+.carbon-credits__price-range {
+    font-size: var(--font-size-small);
+    color: var(--color-gray);
+    margin-top: var(--spacing-sm);
+}
+
+.carbon-credits__helper {
+    font-size: var(--font-size-tiny);
+    color: var(--color-gray);
+    margin-top: var(--spacing-sm);
+}
+
+.carbon-credits__info {
+    border: 2px dashed var(--color-info);
+    background-color: rgba(52, 152, 219, 0.08);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius);
+    margin-bottom: var(--spacing-lg);
+}
+
+.carbon-credits__info-title {
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-dark);
+    margin-bottom: var(--spacing-sm);
+}
+
+.carbon-credits__info-text {
+    font-size: var(--font-size-small);
+    color: var(--color-gray);
+    line-height: 1.6;
+}
+
+.carbon-credits__button {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+    border-radius: var(--radius);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    transition: all var(--transition);
+    font-size: 1rem;
+}
+
+.carbon-credits__button:hover:not(:disabled) {
+    background-color: var(--color-secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.carbon-credits__button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ================================================================
+   RESPONSIVO
+   ================================================================ */
+
+@media (max-width: 767px) {
+    .header__title {
+        font-size: 1.75rem;
+    }
+
+    .header__subtitle {
+        font-size: 1rem;
+    }
+
+    .main {
+        margin: var(--spacing-lg) auto;
+    }
+
+    .calculator {
+        padding: var(--spacing-md);
+    }
+
+    .calculator__transport-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+
+    .calculator__transport-label {
+        padding: var(--spacing-sm);
+        min-height: 100px;
+        font-size: 0.875rem;
+    }
+
+    .calculator__transport-label span:first-child {
+        font-size: 1.75rem;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .results__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .results__value {
+        font-size: 1.5rem;
+    }
+
+    .carbon-credits__grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .carbon-credits__value,
+    .carbon-credits__price {
+        font-size: 2rem;
+    }
+
+    .comparison__item {
+        padding: var(--spacing-md);
+    }
+
+    .comparison__stats {
+        text-align: left;
+        margin-top: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: var(--spacing-lg) var(--spacing-sm);
+    }
+
+    .header__title {
+        font-size: 1.5rem;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .header__subtitle {
+        font-size: 0.9rem;
+    }
+
+    .main {
+        padding: 0 var(--spacing-sm);
+    }
+
+    .calculator {
+        padding: var(--spacing-md);
+    }
+
+    .calculator__button {
+        padding: var(--spacing-md);
+        font-size: 1rem;
+    }
+
+    .calculator__legend {
+        font-size: 1.125rem;
+    }
+
+    .results__card {
+        padding: var(--spacing-md);
+    }
+
+    .results__value {
+        font-size: 1.25rem;
+    }
+
+    .comparison__tip-text {
+        font-size: 0.75rem;
+    }
+
+    .carbon-credits__value,
+    .carbon-credits__price {
+        font-size: 1.75rem;
+    }
+
+    .carbon-credits__info {
+        padding: var(--spacing-md);
+    }
+}
